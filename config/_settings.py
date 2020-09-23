@@ -4,7 +4,7 @@ basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
 
 class BaseConfig(object):
-    SECRET_KEY = os.getenv('SECRET_KEY', 'fgz_home_system')
+    SECRET_KEY = os.getenv('SECRET_KEY', 'fee838e02b6162de69e915506c275c12')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_POOL_RECYCLE = 200
     UPLOAD_FOLDER = os.path.join(basedir, 'uploads')
@@ -28,18 +28,18 @@ class BaseConfig(object):
 
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:qazplm123@127.0.0.1:3306/ljt_blog?charset=utf8'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://账号:密码@地址:3306/数据库?charset=utf8'
     WEB_HOST_NAME = 'http://127.0.0.1:5000/'
 
 
 class TestingConfig(BaseConfig):
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:qazplm123@172.24.34.25:3306/ljt_blog?charset=utf8'
-    WEB_HOST_NAME = 'http://longjiangtao.top/'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://账号:密码@地址:3306/数据库?charset=utf8'
+    WEB_HOST_NAME = ''  # host
 
 
 class ProductionConfig(BaseConfig):
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:qazplm123@172.24.34.25:3306/ljt_blog?charset=utf8'
-    WEB_HOST_NAME = 'http://longjiangtao.top/'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://账号:密码@地址:3306/数据库?charset=utf8'
+    WEB_HOST_NAME = ''  # host
 
 
 config = {
