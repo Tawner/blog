@@ -11,9 +11,11 @@ def register_blueprints(app):
     from apps.user.views import user_bp
     from apps.upload.views import upload_bp
     from apps.admin.views import admin_bp
+    from apps.article.views import article_bp
     app.register_blueprint(user_bp, url_prefix='/api/user')
     app.register_blueprint(upload_bp, url_prefix='/api/upload')
     app.register_blueprint(admin_bp, url_prefix='/api/admin')
+    app.register_blueprint(article_bp, url_prefix='/api/article')
 
 
 def register_plugin(app):
