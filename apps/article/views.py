@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 from common.models.user import *
+=======
+from common.models.article import *
+>>>>>>> 1c9c02ff963a642317ad1d2fc23d39a1052a12d5
 from flask_restful import Resource, Api, marshal
 from flask import Blueprint
 from .param_parse import *
@@ -41,3 +45,7 @@ class ArticleStatusView(Resource):
 
 
 
+=======
+article_api.add_resource("/info", ArticleInfoView)
+article_api.add_resource("/list", ArticleListView)
+>>>>>>> 1c9c02ff963a642317ad1d2fc23d39a1052a12d5
