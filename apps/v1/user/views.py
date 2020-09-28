@@ -1,12 +1,8 @@
 from common.models.user import *
-from flask_restful import Resource, Api, marshal
-from flask import Blueprint
-from apps.user.param_parse import *
-from apps.user.marshals import *
+from flask_restful import Resource, marshal
+from .param_parse import *
+from .marshals import *
 from flask import request
-
-user_bp = Blueprint('user', __name__)
-user_api = Api(user_bp)
 
 
 class UserInfoView(Resource):
@@ -41,7 +37,4 @@ class UserSignUpView(Resource):
             return {"code": 200, "msg": "添加成功"}
 
 
-user_api.add_resource(UserInfoView, '/info')
-user_api.add_resource(UserLoginView, '/login')
-user_api.add_resource(UserSignUpView, '/sign_up')
 

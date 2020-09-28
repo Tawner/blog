@@ -1,21 +1,16 @@
-from common.models import *
 from flask import Flask
 from flask_cors import CORS
 from config.settings import config
 from flask_script import Manager
-from flask_migrate import Migrate, MigrateCommand
+from flask_migrate import MigrateCommand
+from common.libs.middleware import middleware_register
+from common.libs.errors import error_handler
 
 
 def register_blueprints(app):
     """蓝图注册"""
-    from apps.user.views import user_bp
-    from apps.upload.views import upload_bp
-    from apps.admin.views import admin_bp
-    from apps.article.views import article_bp
-    app.register_blueprint(user_bp, url_prefix='/api/user')
-    app.register_blueprint(upload_bp, url_prefix='/api/upload')
-    app.register_blueprint(admin_bp, url_prefix='/api/admin')
-    app.register_blueprint(article_bp, url_prefix='/api/article')
+    from .v1 import api_v1_bp
+    app.register_blueprint(api_v1_bp, url_prefix='/api/v1.0')
 
 
 def register_plugin(app):
@@ -39,6 +34,10 @@ def create_app(config_name):
     register_blueprints(app)
     # 注册插件
     manager = register_plugin(app)
+    # 注册中间件
+    middleware_register(app)
+    # 统一异常
+    error_handler(app)
     return app, manager
 
 

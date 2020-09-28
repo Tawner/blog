@@ -1,12 +1,8 @@
 from common.models.user import *
-from flask_restful import Resource, Api, marshal
-from flask import Blueprint
+from flask_restful import Resource, marshal
 from .param_parse import *
 from .marshals import *
 from flask import request
-
-admin_bp = Blueprint('admin', __name__)
-admin_api = Api(admin_bp)
 
 
 class AdminInfoView(Resource):
@@ -35,6 +31,5 @@ class AdminLoginView(Resource):
         return {"code": 200, "token": res['user'].create_token()}
 
 
-admin_api.add_resource(AdminInfoView, '/info')
-admin_api.add_resource(AdminLoginView, '/login')
+
 
