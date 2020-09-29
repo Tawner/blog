@@ -1,5 +1,5 @@
 from flask_restful.inputs import *
-from common.models.upload import *
+from common.models.models import Upload
 
 
 def _get_string(value):

@@ -8,3 +8,5 @@ admin_fields = {
     "phone": fields.String,
     "image": fields.String
 }
+
+

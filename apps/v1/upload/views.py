@@ -1,8 +1,9 @@
-from common.models.upload import *
+from common.models.models import Upload, db
 from flask_restful import Resource, Api
 from flask import Blueprint
 from flask import request
 from common.libs.utility import *
+import os
 
 upload_bp = Blueprint('upload', __name__)
 upload_api = Api(upload_bp)

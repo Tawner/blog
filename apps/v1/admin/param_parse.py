@@ -1,5 +1,5 @@
 from common.libs.parse import *
-from common.models.upload import Upload
+from common.models.models import Upload
 
 
 class AddAdminParse(BaseParse):
@@ -49,5 +49,15 @@ class AdminLoginParse(BaseParse):
     def add_arguments(self):
         self.parse.add_argument('username', type=inputs.str_range(6, 16), required=True)
         self.parse.add_argument('password', type=inputs.str_range(6, 32), required=True)
+
+
+class AdminListParse(BaseParse):
+    def add_arguments(self):
+        self.parse.add_argument('word', type=str)
+        self.parse.add_argument('page', type=inputs.positive, default=1)
+        self.parse.add_argument('rows', type=inputs.positive, default=10)
+
+
+
 
 
