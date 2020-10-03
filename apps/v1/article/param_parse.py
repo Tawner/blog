@@ -18,7 +18,7 @@ class ArticleListParse(BaseParse):
             category = self.params.pop("category")
             if category.module != "article":
                 return abort(400, message={"category": "请选择正确的文章栏目"})
-            self.params['category'] = category.id
+            self.params['category_id'] = category.id
 
 
 class ArticleListAdminParse(ArticleListParse):
