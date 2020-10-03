@@ -167,18 +167,26 @@ class Category(Base):
 
     # 外键、关联
     upper_id = db.Column(db.Integer, db.ForeignKey('category.id'))
-    upper = db.relationship("Category", foreign_keys=[upper_id], backref="lower")
+    upper = db.relationship("Category", foreign_keys=[upper_id])
     image_id = db.Column(db.Integer, db.ForeignKey("upload.id"))
     image = db.relationship("Upload", foreign_keys=[image_id])
 
     @property
     def sub_section(self):
         """获取显示的子栏目"""
-        res = []
-        for var in self.lower:
-            if var.show == 1: res.append(var)
-        return res
+        category = Category.query.filter(Category.upper_id == self.id, Category.is_delete == 0).all()
+        return category
 
+    @property
+    def lower(self):
+        category = Category.query.filter(
+            Category.upper_id == self.id,
+            Category.is_delete == 0,
+            Category.show == 1
+        ).all()
+        return category
+
+    @classmethod
     def empty(self):
         """是否为空栏目"""
         sub = Category.query.filter(
@@ -217,5 +225,5 @@ class Picture(Base):
     image_id = db.Column(db.Integer, db.ForeignKey("upload.id"))
     image = db.relationship("Upload", foreign_keys=[image_id])
     picture_album_id = db.Column(db.Integer, db.ForeignKey("picture_album.id"))
-    picture_album = db.relationship("Picture_Album", foreign_keys=[picture_album_id], backref="picture")
+    picture_album = db.relationship("PictureAlbum", foreign_keys=[picture_album_id], backref="picture")
 

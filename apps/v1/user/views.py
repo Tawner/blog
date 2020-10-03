@@ -55,7 +55,7 @@ class UserListAdminView(Resource):
 
         # 数据整形
         page_data = {"page": users.page, "rows": req_val['rows'], "total_page": users.pages}
-        data = marshal(users, user_fields)
+        data = marshal(users.items, user_fields)
         return {"code": 200, "data": data, "page_data": page_data}
 
 

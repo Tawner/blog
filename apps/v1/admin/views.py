@@ -11,8 +11,11 @@ class AddAdminView(Resource):
     @AdminLoginRequired
     def post(self):
         req_val = AddAdminParse().parse_args()
-        User.add(**req_val)
-        return {"code": 200, "msg": "添加成功"}
+        res = User.add(**req_val)
+        if res['status'] == "failure":
+            return {"code": 202, "msg": res['msg']}
+        else:
+            return {"code": 200, "msg": "添加成功"}
 
 
 class AdminInfoView(Resource):
@@ -20,7 +23,7 @@ class AdminInfoView(Resource):
     @AdminLoginRequired
     def get(self, admin_id):
         # 数据查询
-        admin = User.query.filter(User.id == admin_id, User.is_super == 1, User.is_delete == 0).first_or_404()
+        admin = User.query.filter(User.id == admin_id, User.superuser == 1, User.is_delete == 0).first_or_404()
 
         # 数据整形
         data = marshal(admin, admin_fields)
@@ -55,7 +58,7 @@ class AdminListView(Resource):
         # 数据查询
         query_args = [User.is_delete == 0, User.superuser == 1]
         if req_val.get('word', None): query_args.append(User.nickname.like('%' + req_val['word'] + '%'))
-        users = User.query.filter(*query_args).paginate(req_val['page', req_val['rows']])
+        users = User.query.filter(*query_args).paginate(req_val['page'], req_val['rows'])
 
         # 数据整形
         page_data = {"page": users.page, "rows": req_val['rows'], "total_page": users.pages}
