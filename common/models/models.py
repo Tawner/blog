@@ -3,6 +3,7 @@ from common.libs.utility import *
 from flask import current_app
 from common.libs.redis import Redis
 import os
+MODULES = ("article", "picture")
 
 
 class Upload(Base):
@@ -162,20 +163,21 @@ class Category(Base):
     sort = db.Column(db.SmallInteger, default=20, comment="排序值")
     level = db.Column(db.SmallInteger, comment="栏目等级")
     module = db.Column(db.String(32), comment="所属模块")
+    show = db.Column(db.SmallInteger, default=1, comment="前台是否展示,0否1是")
 
     # 外键、关联
     upper_id = db.Column(db.Integer, db.ForeignKey('category.id'))
-    upper = db.relationship("Category", foreign_keys=[upper_id])
+    upper = db.relationship("Category", foreign_keys=[upper_id], backref="lower")
     image_id = db.Column(db.Integer, db.ForeignKey("upload.id"))
     image = db.relationship("Upload", foreign_keys=[image_id])
 
+    @property
     def sub_section(self):
-        """获取子栏目"""
-        categorys = Category.query.filter(
-            Category.upper_id == self.id,
-            Category.is_delete == 0
-        ).all()
-        return categorys
+        """获取显示的子栏目"""
+        res = []
+        for var in self.lower:
+            if var.show == 1: res.append(var)
+        return res
 
     def empty(self):
         """是否为空栏目"""
@@ -190,4 +192,30 @@ class Category(Base):
     @property
     def category_structure(self):
         return [self.upper, self] if self.upper else [self]
+
+
+class PictureAlbum(Base):
+    __tablename__ = "picture_album"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    title = db.Column(db.String(128), nullable=False, comment="图集名")
+    description = db.Column(db.Text, comment="图集描述")
+    show = db.Column(db.SmallInteger, default=1, comment="是否展示0否1是")
+
+    # 外键关联
+    category_id = db.Column(db.Integer, db.ForeignKey("category.id"), comment="栏目")
+    category = db.relationship("Category", foreign_keys=[category_id])
+
+
+class Picture(Base):
+    __tablename__ = "picture"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    title = db.Column(db.String(128), comment="标题")
+    description = db.Column(db.Text, comment="描述")
+    url = db.Column(db.String(255), comment="跳转地址")
+
+    # 外键关联
+    image_id = db.Column(db.Integer, db.ForeignKey("upload.id"))
+    image = db.relationship("Upload", foreign_keys=[image_id])
+    picture_album_id = db.Column(db.Integer, db.ForeignKey("picture_album.id"))
+    picture_album = db.relationship("Picture_Album", foreign_keys=[picture_album_id], backref="picture")
 

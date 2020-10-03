@@ -10,6 +10,6 @@ admin.add_resource(api)
 user.add_resource(api)
 upload.add_resource(api)
 article.add_resource(api)
-# category.add_resource(api)
+category.add_resource(api)
 
 

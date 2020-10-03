@@ -31,3 +31,14 @@ article_info_admin_field = {
     "published": fields.Integer
 }
 article_info_admin_field.update(article_info_field)
+
+
+article_list_field = {
+    "id": fields.Integer,
+    "title": fields.String,
+    "comment": fields.Integer,
+    "agree": fields.Integer,
+    "click": fields.Integer,
+    "cover_image": fields.String,
+    "category": fields.Nested(category_info_fields),
+}
