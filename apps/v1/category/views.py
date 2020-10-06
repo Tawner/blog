@@ -18,7 +18,10 @@ class CategoryListAdminView(Resource):
     """获取栏目列表"""
     @AdminLoginRequired
     def get(self):
-        category = Category.query.filter(Category.is_delete == 0, Category.level == 1).all()
+        req_val = CategoryListAdminParse().parse_args()
+        query_args = [Category.is_delete == 0, Category.level == 1]
+        if req_val.get("module", None): query_args.append(Category.module == req_val['module'])
+        category = Category.query.filter(*query_args).all()
         return {"code": 200, "data": marshal(category, category_structure_admin_field)}
 
 
@@ -51,5 +54,4 @@ class AddCategoryView(Resource):
         db.session.add(category)
         db.session.commit()
         return {"code": 200, "msg": "添加成功"}
-
 

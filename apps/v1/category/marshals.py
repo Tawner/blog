@@ -7,7 +7,6 @@ category_info_field = {
     "sort": fields.Integer,
     "level": fields.Integer,
     "module": fields.String,
-    "show": fields.Integer,
     "image": fields.String(attribute="image.url"),
 }
 
@@ -18,6 +17,7 @@ category_structure_field = {
 category_structure_field.update(category_info_field)
 
 category_structure_admin_field = {
-    "lower": fields.Nested(category_info_field)
+    "lower": fields.Nested(category_info_field),
+    "show": fields.Integer,
 }
 category_structure_admin_field.update(category_info_field)

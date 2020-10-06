@@ -6,12 +6,12 @@ from flask import abort
 
 class AddCategoryParse(BaseParse):
     def add_arguments(self):
-        self.parse.add_arguments("title", type=inputs.str_range(1, 128), required=True)
-        self.parse.add_arguments("sort", type=inputs.positive, default=20)
-        self.parse.add_arguments("module", type=inputs.str_range(1, 32), choices=MODULES)
-        self.parse.add_arguments("show", type=int, choices=(0, 1))
-        self.parse.add_arguments("upper_id", type=inputs.data_exist(Category))
-        self.parse.add_arguments("image_id", type=inputs.data_exist(Upload, re_obj=True))
+        self.parse.add_argument("title", type=inputs.str_range(1, 128), required=True)
+        self.parse.add_argument("sort", type=inputs.positive, default=20)
+        self.parse.add_argument("module", type=inputs.str_range(1, 32), choices=MODULES, required=True)
+        self.parse.add_argument("show", type=int, choices=(0, 1))
+        self.parse.add_argument("upper_id", type=inputs.data_exist(Category))
+        self.parse.add_argument("image_id", type=inputs.data_exist(Upload, re_obj=True))
         # level = db.Column(db.SmallInteger, comment="栏目等级")
 
     def other_parse(self):
@@ -29,3 +29,7 @@ class AddCategoryParse(BaseParse):
 class UpdateCategoryParse(BaseParse):
     pass
 
+
+class CategoryListAdminParse(BaseParse):
+    def add_arguments(self):
+        self.parse.add_argument("module", type=str, choices=MODULES)

@@ -167,7 +167,6 @@ class Category(Base):
 
     # 外键、关联
     upper_id = db.Column(db.Integer, db.ForeignKey('category.id'))
-    upper = db.relationship("Category", foreign_keys=[upper_id])
     image_id = db.Column(db.Integer, db.ForeignKey("upload.id"))
     image = db.relationship("Upload", foreign_keys=[image_id])
 
@@ -198,8 +197,14 @@ class Category(Base):
         return False if sub or content else True
 
     @property
+    def upper(self):
+        category = Category.query.get(self.upper_id)
+        return category if category else None
+
+    @property
     def category_structure(self):
-        return [self.upper, self] if self.upper else [self]
+        res = [self.upper, self] if self.upper_id else [self]
+        return res
 
 
 class PictureAlbum(Base):

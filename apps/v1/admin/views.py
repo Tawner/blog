@@ -16,6 +16,11 @@ class AddAdminView(Resource):
             return {"code": 202, "msg": res['msg']}
         else:
             return {"code": 200, "msg": "添加成功"}
+        
+
+class TokenGetAdminInfoView(Resource):
+    def get(self):
+        return {"code": 200, "data": marshal(request.current_user, admin_fields)}
 
 
 class AdminInfoView(Resource):

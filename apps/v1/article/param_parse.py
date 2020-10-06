@@ -14,7 +14,7 @@ class ArticleListParse(BaseParse):
         self.parse.add_argument("rows", type=int, default=10)
 
     def other_parse(self):
-        if "category" in self.params.keys():
+        if self.params.get("category", None):
             category = self.params.pop("category")
             if category.module != "article":
                 return abort(400, message={"category": "请选择正确的文章栏目"})
@@ -46,7 +46,7 @@ class AddArticleParse(BaseParse):
             if image.file_type != 0:
                 return abort(400, message={"cover_id": "图片不存在"})
             else:
-                self.params['image_id'] = image.id
+                self.params['cover_id'] = image.id
 
         # 栏目校验
         category = self.params.pop("category")
