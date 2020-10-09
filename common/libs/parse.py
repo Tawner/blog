@@ -10,13 +10,12 @@ class BaseParse:
 
     def parse_args(self):
         self.add_arguments()
-        self.params = self.parse.parse_args()
-        self.other_parse()
-        req_val = {}
-        for key, val in self.params.items():
+        req_val = self.parse.parse_args()
+        for key, val in req_val.items():
             if val is not None:
-                req_val[key] = val
-        return req_val
+                self.params[key] = val
+        self.other_parse()
+        return self.params
 
     def add_arguments(self):  # 参数添加
         pass
