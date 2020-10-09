@@ -132,7 +132,7 @@ class User(Base):
 
 
 class Article(Base):
-    __tablename__ = "artice"
+    __tablename__ = "article"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(255), nullable=False, comment="文章标题")
     content = db.Column(db.Text, comment="文章内容")
