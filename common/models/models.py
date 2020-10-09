@@ -141,6 +141,7 @@ class Article(Base):
     click = db.Column(db.Integer, comment="浏览次数", default=0)
     recom = db.Column(db.SmallInteger, default=0, comment="是否推荐，0否1是")
     published = db.Column(db.SmallInteger, default=1, comment="是否发布0否1是")
+    publish_date = db.Column(db.DateTime, nullable=False, default=db.func.now(), comment='发布时间')
 
     # 外键关联
     cover_id = db.Column(db.Integer, db.ForeignKey("upload.id"), comment="封面")

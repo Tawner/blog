@@ -38,6 +38,7 @@ class AddArticleParse(BaseParse):
         self.parse.add_argument("recom", type=int, choices=(0, 1), default=1)  # 0不推荐，1推荐
         self.parse.add_argument("cover_id", type=inputs.data_exist(Upload, re_obj=True))
         self.parse.add_argument('category', type=inputs.data_exist(Category, re_obj=True), required=True)
+        self.parse.add_argument('publish_date', type=inputs.date_time(time_format="%Y-%m-%d %H:%M:%S"))
 
     def other_parse(self):
         # 封面校验

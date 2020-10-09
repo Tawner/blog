@@ -24,6 +24,7 @@ article_info_field = {
     "cover_image": fields.String,
     "category": fields.Nested(category_info_fields),
     "category_structure": fields.Nested(category_structure_fields, attribute="category.category_structure"),
+    "publish_date": fields.Datetime("%Y-%m-%d")
 }
 
 article_info_admin_field = {
