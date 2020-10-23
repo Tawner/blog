@@ -13,7 +13,7 @@ class ArticleListView(Resource):
         req_val = ArticleListParse().parse_args()
 
         query_args = [Article.is_delete == 0,  Article.published == 1]
-        if req_val.get('category', None): query_args.append(Article.category_id == req_val['category'])
+        if req_val.get('category', None): query_args.append(Article.category_id == req_val['category_id'])
         if req_val['recom'] != 0: query_args.append(Article.recom == req_val['recom'] - 1)
         if req_val.get("word", None): query_args.append(or_(
             Article.title.like('%' + req_val['word'] + '%'),
@@ -68,14 +68,14 @@ class ArticleInfoAdminView(Resource):
 
 class ArticleListAdminView(Resource):
     """获取文章列表"""
-    @AdminLoginRequired
+    # @AdminLoginRequired
     def get(self):
         req_val = ArticleListAdminParse().parse_args()
 
         query_args = []
         if req_val['published'] != 0: query_args.append(Article.published == req_val['published'] - 1)
         if req_val['delete'] != 0: query_args.append(Article.is_delete == req_val['delete'] - 1)
-        if req_val.get('category', None): query_args.append(Article.category_id == req_val['category'])
+        if req_val.get('category', None): query_args.append(Article.category_id == req_val['category_id'])
         if req_val['recom'] != 0: query_args.append(Article.recom == req_val['recom'] - 1)
         if req_val.get("word", None): query_args.append(or_(
             Article.title.like('%' + req_val['word'] + '%'),

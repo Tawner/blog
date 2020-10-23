@@ -15,7 +15,7 @@ class ArticleListParse(BaseParse):
 
     def other_parse(self):
         if self.params.get("category", None):
-            category = self.params.pop("category")
+            category = self.params["category"]
             if category.module != "article":
                 return abort(400, message={"category": "请选择正确的文章栏目"})
             self.params['category_id'] = category.id
