@@ -43,10 +43,10 @@ class date_time:
             try:
                 value = datetime.strptime(value, self.time_format)
             except:
-                return ValueError(self.argument + '参数格式错误')
+                raise ValueError(self.argument + '参数格式错误，格式：%s' % self.time_format)
             return value
         else:
-            raise ValueError(self.argument + '参数格式错误')
+            raise ValueError(self.argument + '参数格式错误，格式：%s' % self.time_format)
 
 
 class data_exist:

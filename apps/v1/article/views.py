@@ -71,7 +71,6 @@ class ArticleListAdminView(Resource):
     @AdminLoginRequired
     def get(self):
         req_val = ArticleListAdminParse().parse_args()
-        print(req_val)
 
         query_args = []
         if req_val['published'] != 0: query_args.append(Article.published == req_val['published'] - 1)
