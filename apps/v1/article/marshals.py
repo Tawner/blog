@@ -24,7 +24,8 @@ article_info_field = {
     "cover_image": fields.String,
     "category": fields.Nested(category_info_fields),
     "category_structure": fields.Nested(category_structure_fields, attribute="category.category_structure"),
-    "publish_date": fields.Datetime("%Y-%m-%d")
+    "publish_date": fields.Datetime("%Y-%m-%d"),
+    "description": fields.String
 }
 
 article_info_admin_field = {
@@ -42,4 +43,7 @@ article_list_field = {
     "click": fields.Integer,
     "cover_image": fields.String,
     "category": fields.Nested(category_info_fields),
+    "publish_date": fields.Datetime("%Y-%m-%d"),
+    "recom": fields.Integer,
+    "description": fields.String
 }
